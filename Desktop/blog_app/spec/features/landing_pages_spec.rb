@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# Tests if I can see posted blogs on the landing page.
 RSpec.feature "LandingPages", type: :feature do
   context 'Landing page' do
     Steps 'Going to landing page' do
@@ -12,6 +12,26 @@ RSpec.feature "LandingPages", type: :feature do
     end
   end
 
+  context "Signing up" do
+    Steps "To sign up" do
+      Given "I am on the landing page" do
+        visit "/"
+      end
+      Then "I can sign up" do
+        click_link "Sign Up"
+      end
+      Then "I am taken to the Sign Up page" do
+        fill_in "Email", with: "bob@bob.bob"
+        fill_in "Password", with: "123456"
+        fill_in "Password confirmation", with: "123456"
+        click_link "Sign up"
+      end
+      Then "I am taken to the Successful sign up page" do
+        expect(page).to have_content("Welcome! You have signed up successfully.")
+      end
+    end
+  end
+# Tests if I can write a new blog.
   context 'New blog' do
     Steps 'To write a new blog' do
       Given 'I am on the landing page' do
